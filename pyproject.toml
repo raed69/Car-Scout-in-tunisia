@@ -1,0 +1,31 @@
+[project]
+name = "car-scout"
+version = "0.1.0"
+description = "AI agent for the Tunisian used car market"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "anthropic>=1.0.0",
+  "fastapi>=0.115.0",
+  "uvicorn>=0.30.0",
+  "langgraph>=0.2.0",
+  "langchain>=0.3.0",
+  "langchain-anthropic>=0.3.0",
+  "mcp>=1.0.0",
+  "pydantic>=2.0.0",
+  "python-dotenv>=1.0.0",
+  "requests>=2.32.0",
+  "truststore>=0.10.0",
+]
+
+[tool.setuptools]
+packages = [
+  "backend",
+  "backend.agent",
+  "backend.agent.steps",
+  "backend.app",
+  "backend.models",
+  "backend.rules",
+  "backend.services",
+  "backend.tools",
+]
