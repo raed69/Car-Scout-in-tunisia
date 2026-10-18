@@ -1,4 +1,4 @@
 from .compare_cars import compare_cars
-from .price_evaluation import PriceAssessment, assess_price
+from .price_evaluation import PriceAssessment, assess_price, market_range
 
-__all__ = ["PriceAssessment", "assess_price", "compare_cars"]
+__all__ = ["PriceAssessment", "assess_price", "compare_cars", "market_range"]

@@ -6,15 +6,17 @@ from dataclasses import asdict
 from uuid import UUID
 
 import anthropic
+import requests
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from backend.config import PROJECT_ROOT  # also loads .env
+from backend.config import DEFAULT_USER_ID, PROJECT_ROOT  # also loads .env
 from backend.agent.answer_question import answer_question
 from backend.agent.conversation_state import ConversationState
+from backend.agent.steps.load_conversation import load_chat_for_page
 from backend.agent.steps.load_preferences import load_preferences
 from backend.services.claude import ClaudeRefusedError, explain_error
 
@@ -35,7 +37,7 @@ class AskRequest(BaseModel):
 
 
 def create_app() -> FastAPI:
-    """Build the web app: one chat page and the two routes it calls."""
+    """Build the web app: one chat page and the routes it calls."""
 
     app = FastAPI(title="Car Scout")
     app.mount("/assets", StaticFiles(directory=BUILT_PAGE / "assets", check_dir=False), name="assets")
@@ -51,6 +53,16 @@ def create_app() -> FastAPI:
     def get_preferences():
         state = load_preferences(ConversationState())
         return {"preferences": asdict(state.user_preferences), "warnings": state.storage_warnings}
+
+    @app.get("/api/conversations/{conversation_id}")
+    def get_conversation(conversation_id: UUID):
+        """The messages of one chat, so the page can show it again after a reload."""
+
+        try:
+            messages = load_chat_for_page(str(conversation_id), DEFAULT_USER_ID)
+        except requests.RequestException as error:
+            return {"messages": [], "warnings": [f"Could not load the earlier messages: {error}"]}
+        return {"messages": messages, "warnings": []}
 
     @app.post("/api/ask")
     def ask(request: AskRequest):

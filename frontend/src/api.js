@@ -18,6 +18,16 @@ export async function askQuestion(question, conversationId) {
   return data;
 }
 
+// The messages of an earlier chat, oldest first. Returns null when they could not be loaded.
+export async function loadConversation(conversationId) {
+  try {
+    const response = await fetch("/api/conversations/" + encodeURIComponent(conversationId));
+    return response.ok ? await response.json() : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function loadPreferences() {
   try {
     const response = await fetch("/api/preferences");

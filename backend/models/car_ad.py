@@ -5,16 +5,16 @@ from dataclasses import dataclass
 
 @dataclass
 class CarAd:
-    """A normalized representation of a single car listing."""
+    """What could be read from one search result. A field is None when the ad does not say it."""
 
     title: str
-    brand: str
-    model: str
-    price_tnd: float
-    city: str
+    url: str | None = None
+    brand: str | None = None
+    model: str | None = None
+    price_tnd: int | None = None
+    city: str | None = None
     year: int | None = None
     fuel: str | None = None
     transmission: str | None = None
     mileage_km: int | None = None
-    url: str | None = None
     source: str | None = None

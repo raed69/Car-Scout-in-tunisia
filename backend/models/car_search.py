@@ -16,6 +16,14 @@ class CarSearch(BaseModel):
     year_max: int | None = Field(default=None, description="Maximum manufacturing year")
     mileage_max_km: int | None = Field(default=None, description="Maximum mileage in kilometers")
     notes: str | None = Field(default=None, description="Extra details from the user's message")
+    needs_more_info: bool = Field(
+        default=False,
+        description="True only when the request is too vague to search, even with the saved preferences and earlier messages",
+    )
+    follow_up_question: str | None = Field(
+        default=None,
+        description="When needs_more_info is true: one short question to the user, in the user's language",
+    )
     assumed_from_preferences: list[str] = Field(
         default_factory=list,
         description="Names of the fields above that were filled from the saved preferences, not from the message",

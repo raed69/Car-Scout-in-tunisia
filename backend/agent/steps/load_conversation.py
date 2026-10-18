@@ -7,6 +7,9 @@ from backend.agent.steps.save_conversation import MESSAGES_TABLE
 from backend.config import MAX_EARLIER_MESSAGE_LENGTH, MAX_EARLIER_MESSAGES
 from backend.services.supabase import SupabaseClient
 
+# The page shows at most this many messages of an old chat.
+MAX_MESSAGES_SHOWN = 200
+
 
 def load_conversation(state: ConversationState) -> ConversationState:
     """Load the last questions and answers of this chat, so a follow-up question is understood."""
@@ -28,6 +31,21 @@ def load_conversation(state: ConversationState) -> ConversationState:
         for row in reversed(rows)
     ]
     return state
+
+
+def load_chat_for_page(conversation_id: str, user_id: str) -> list[dict]:
+    """Return every message of one chat, oldest first, so the page can show it again after a reload.
+
+    Raises requests.RequestException when Supabase cannot be reached.
+    """
+
+    rows = SupabaseClient().select(
+        MESSAGES_TABLE,
+        {"conversation_id": conversation_id, "user_id": user_id},
+        order="id.asc",
+        limit=MAX_MESSAGES_SHOWN,
+    )
+    return [{"role": row["role"], "content": row["content"]} for row in rows]
 
 
 def format_earlier_messages(state: ConversationState) -> str:

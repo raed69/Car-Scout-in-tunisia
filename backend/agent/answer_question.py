@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from backend.agent.conversation_state import ConversationState
+from backend.agent.steps.ask_user_question import ask_user_question
 from backend.agent.steps.load_conversation import load_conversation
 from backend.agent.steps.load_preferences import load_preferences
 from backend.agent.steps.remember_preferences import remember_preferences
@@ -22,7 +23,11 @@ def answer_question(question: str, conversation_id: str | None = None) -> Conver
         load_conversation(state)
     understand_message(state, question)
     remember_preferences(state)
-    run_tools(state)
-    write_answer(state)
+    if state.car_search.needs_more_info:
+        # Too vague to search: ask one question instead. This also skips the search and the second Claude call.
+        ask_user_question(state)
+    else:
+        run_tools(state)
+        write_answer(state)
     save_conversation(state)
     return state

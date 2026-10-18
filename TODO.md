@@ -23,10 +23,11 @@ Done and tested with a real question on 10 October 2026. The sentences below des
 
 ## Next
 
-- [ ] **6. Turn search results into real ads.** SearXNG gives a title, a link and a short text. Nothing reads the price, year or mileage yet. The price check and the car comparison need those numbers.
+- [ ] **6. Turn search results into real ads.** Written on 18 October 2026, waiting for a test with real questions. `backend/tools/read_ads.py` reads the price, year and mileage from each result's title and snippet (no Claude, so free). When at least 3 results show a price, each one is marked cheap, fair or expensive against the others (`market_range` in `backend/rules/price_evaluation.py`), over budget or not, and ranked by value (`compare_cars`). Checked on sample ad texts. Limit: it only sees the short snippet, not the full ad page.
 - [x] **7. Save conversations and preferences in Supabase.** Tables `conversation_messages` and `user_preferences` (`setup/database/create_tables.sql`). Code: `backend/services/supabase.py`, `backend/agent/steps/load_preferences.py`, `remember_preferences.py`, `save_conversation.py`. Tested with a real question on 10 October 2026.
 - [ ] **7b. Use the saved preferences.** The code is written: saved fuel, gearbox, city and budget fill in what a new message leaves out (`backend/agent/steps/understand_message.py` and its prompt), and the answer says what was assumed. Not yet tested with Claude.
-- [ ] **8. Ask a real follow-up question.** `backend/agent/steps/ask_user_question.py` always asks the same question, and nothing ever decides that more information is needed.
+- [ ] **8. Ask a real follow-up question.** Written on 18 October 2026, waiting for a test with real questions. When a request is too vague ("nheb karhba"), Claude sets `needs_more_info` and writes one short question (`backend/models/car_search.py` and the `understand_message` prompt). `backend/agent/answer_question.py` then answers with that question and skips the search and the second Claude call. It never asks twice in a row.
+- [ ] **8b. Bring back the chat after a page reload.** Written on 18 October 2026, waiting for a test. The browser remembers the open chat (`frontend/src/App.jsx`), and the new route `/api/conversations/{id}` (`backend/app/api.py`) sends its messages back from Supabase. Checked without Claude on a saved chat.
 - [ ] **9. Check the agent graph.** `backend/agent/build_agent.py` is never run by the CLI, and its steps loop without a clear way to stop.
 
 ## Smaller things
@@ -34,9 +35,9 @@ Done and tested with a real question on 10 October 2026. The sentences below des
 - [x] Update the model name in `backend/config.py`. It now uses `claude-haiku-5-5`, the cheapest model (switched from `claude-opus-5-5` on 10 October 2026 to save money; not yet tested with a real question).
 - [ ] Real car specs. `backend/tools/get_car_specs.py` returns the same answer for every car.
 - [x] Removed the old placeholder `actions/search_ads.py` (18 October 2026).
-- [ ] `backend/rules/compare_cars.py` has the year 2026 written in the code. Use the current year instead.
+- [x] `backend/rules/compare_cars.py` uses the current year instead of 2026 written in the code (18 October 2026).
 - [x] Web page and web API. `python main.py` opens the chat page (React, in `frontend/`, served by `backend/app/api.py`). `python main.py cli` keeps the terminal chat. Tested on 11 October 2026 with a fake answer, so no Claude credit was spent. Not yet tested with a real question.
-- [ ] **Remember earlier messages.** The code is written (18 October 2026): `backend/agent/steps/load_conversation.py` loads the last 10 messages of the chat from Supabase and gives them to Claude, so "and a cheaper one?" can be understood. Tested without Claude: the messages load in the right order. Not yet tested with a real question.
+- [x] **Remember earlier messages.** The code is written (18 October 2026): `backend/agent/steps/load_conversation.py` loads the last 10 messages of the chat from Supabase and gives them to Claude, so "and a cheaper one?" can be understood. Tested without Claude: the messages load in the right order. Tested with real questions on 18 October 2026: follow-ups work.
 - [ ] Tests.
 - [x] Git and GitHub: pushed to https://github.com/raed69/Car-Scout-in-tunisia on 18 October 2026. `.env` and `setup/searxng/settings.yml` (it has a secret key) stay on this computer only.
 

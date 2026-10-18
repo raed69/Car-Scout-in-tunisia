@@ -31,7 +31,7 @@ def run_cli():
             state = answer_question(question, conversation_id)
             print(f"\nCar Scout: {state.final_answer or ''}")
             for warning in state.storage_warnings:
-                print(f"\n[Not saved] {warning}")
+                print(f"\n[Warning] {warning}")
         except (ClaudeRefusedError, anthropic.APIError) as error:
             print(f"\nCar Scout: {explain_error(error)}")
 
