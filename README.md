@@ -1,78 +1,126 @@
-# Car Scout
+# Car Scout 🚗
 
-Car Scout is an agentic AI project for the Tunisian car market. It helps users search, compare, and evaluate used cars in Darija, French, or English.
+Car Scout howa assistant (intelligence artificielle) y3awnek tal9a karhba occasion fi Tounes.
 
-## Project structure
+Tektbou chnowa t7eb, b Darija, b Fran9ais walla b Anglais, w houwa ylawej fi les sites mta3 les annonces fi Tounes w yraja3lek jweb m3a les liens.
+
+Exemple:
+
+> nheb clio 4 essence fi sfax, mouch akther men 35 alf
+
+## Chnowa ya3mel
+
+- **Yefhem chnowa t7eb**: el marque, el modèle, el ville, el budget, el carburant, boîte auto walla manuelle.
+- **Ylawej 3al annonces** fil internet, w y3tik les liens.
+- **Yetfakker chnowa t7eb**: ken 9otlou marra "diesel fi Tunis", el marra el jeya ya3ref.
+
+## Chnowa mazel mouch mawjoud
+
+- Mazel ma y9arach el prix, el 3am wel kilométrage mta3 kol annonce.
+- Mazel ma yetfakkarch el messages elli 9bal: ken tes2lou "w wa7da arkhes?", ma yefhemch.
+
+Les détails lkol mawjoudin fi [TODO.md](TODO.md).
+
+## Kifech mabni
 
 ```
 CarScout/
-  main.py          starts the app
-  frontend/        the chat page, built with React and Vite
-    src/App.jsx    the page: messages, sending a question
-    src/components/  Header, Welcome, Message, Composer (the text box)
-    src/api.js     the calls to the backend
-  backend/         all the Python code
-    config.py      settings, loads .env
-    agent/         the agent steps and the prompts sent to Claude
-    tools/         tools the agent uses: ad search, saving preferences
-    services/      connections to Claude, SearXNG and Supabase
-    models/        the shapes of the data: a search, an ad, preferences
-    rules/         price check and car comparison
-    app/           the web API (api.py) and the terminal chat (cli.py)
-  setup/           files used once to set things up
-    database/      tables to create in Supabase
-    searxng/       SearXNG settings
+  main.py          howa elli ydemarri el application
+  frontend/        el page elli tchoufha (React)
+    src/App.jsx      el page: les messages w b3ath el sou2el
+    src/components/  les morceaux mta3 el page: Header, Welcome, Message, Composer
+    src/api.js       el page kifech tahki m3a el backend
+  backend/         el code Python lkol
+    config.py      les réglages, w ya9ra el fichier .env
+    agent/         les étapes mta3 el assistant w les instructions elli yab3athhom l Claude
+    tools/         les outils: recherche des annonces, sauvegarde des préférences
+    services/      el connexion m3a Claude, SearXNG w Supabase
+    models/        chakl les données: recherche, annonce, préférences
+    rules/         7ssab el prix (rkhis, normal, ghali) w comparaison des karhbet
+    app/           el API web (api.py) w el chat fil terminal (cli.py)
+  setup/           fichiers t7athrhom marra barka
+    database/      les tables elli lazem ta3mel'hom fi Supabase
+    searxng/       les réglages mta3 SearXNG
 ```
 
-## Quick start
+## Chnowa testa3mel
 
-1. Create a virtual environment:
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Copy environment variables:
-   ```bash
-   copy .env.example .env
-   ```
-4. Build the chat page (React). This needs Node.js. Run it once, and again after each change to the `frontend` folder:
-   ```bash
-   cd frontend
-   npm install
-   npm run build
-   cd ..
-   ```
-5. Start the chat page:
-   ```bash
-   python main.py
-   ```
-   It opens `http://127.0.0.1:8000` in your browser. Press Ctrl+C in the terminal to stop it. The page only works on this computer, because it has no login.
+| Chnowa | 3lech |
+| --- | --- |
+| **Claude** (Anthropic) | yefhem el sou2el w yekteb el jweb. **Kol sou2el yekhou chwaya flous** mel crédit mta3ek. |
+| **SearXNG** | moteur de recherche ykhdem 3and'ek fil PC, b Docker. Bilech, ma ylazmouch clé. |
+| **Supabase** | base de données fil internet, tkhabi fiha les conversations wel préférences. |
+| **React** | el page elli tchoufha fil navigateur. |
 
-   While working on the page, run `python main.py` in one terminal and `npm run dev` in the `frontend` folder in a second terminal, then open the address Vite prints (usually `http://localhost:5173`). The page updates as soon as you save a file, without building again.
+## Kifech tkhaddmou
 
-   To chat in the terminal instead:
-   ```bash
-   python main.py cli
-   ```
+Lazmek **Python** (3.11 walla jdid), **Node.js** w **Docker Desktop**.
+Les commandes lkol tektebhom fil terminal (fi VS Code: menu **Terminal > New Terminal**), w enti dakhel fil dossier `CarScout`.
 
-## Environment variables
+**1. Habbet les librairies Python** (marra barka):
+```bash
+pip install -r requirements.txt
+```
 
-Set any API keys in `.env` before using real integrations.
+**2. 7ather el fichier `.env`** (marra barka):
+```bash
+copy .env.example .env
+```
+Ba3d, 7ell `.env` w 7ott fih les clés mta3ek: el clé mta3 Claude w les clés mta3 Supabase.
+⚠️ El fichier hedha fih des secrets: **ma tpartajih m3a 7ad** w ma t7ottouch 3la GitHub. (Mahou déjà ma yetla3ch, `.gitignore` ymanna3).
 
-Web search uses a local SearXNG container (no API key). It reads its settings from `setup/searxng/settings.yml`, which must keep `json` in `search.formats`. That file is not on GitHub because it holds a secret key: copy `settings.example.yml` to `settings.yml` and put a random string in `secret_key`. Then start the container:
+**3. 7ather Supabase** (marra barka):
+7ell Supabase, emchi l **SQL Editor**, copier el contenu mta3 `setup/database/create_tables.sql` w a3mel **Run**.
+
+**4. 7ather SearXNG** (marra barka):
+- Copier `setup/searxng/settings.example.yml` w semmi el copie `settings.yml` (fi nafs el dossier).
+- Fi `settings.yml`, baddel `change-me` b klam random. Tnajjem testa3mel:
+  ```bash
+  python -c "import secrets; print(secrets.token_hex(16))"
+  ```
+- 7ell Docker Desktop w a3mel:
+  ```bash
+  docker run -d --name searxng -p 8080:8080 -v "%cd%\setup\searxng:/etc/searxng" searxng/searxng
+  ```
+  (Ken el terminal mta3ek PowerShell, baddel `%cd%` b `${PWD}`.)
+
+El marrat el jeyin, yekfi t7ell Docker Desktop, temchi l **Containers** w tenzel 3al ▶️ 9oddem `searxng`.
+
+**5. Bni el page React** (marra barka, w 3awedha kol ma tbaddel 7aja fi `frontend`):
+```bash
+cd frontend
+npm install
+npm run build
+cd ..
+```
+
+**6. Demarri Car Scout:**
+```bash
+python main.py
+```
+El page tet7al wa7adha fil navigateur 3al `http://127.0.0.1:8000`.
+Bech tsakkrou: `Ctrl+C` fil terminal.
+
+El page tekhdem **ken 3al PC mta3ek**, 5ater ma fihech login.
+
+### Ken t7eb el chat fil terminal
 
 ```bash
-docker run -d --name searxng -p 8080:8080 -v "%cd%\setup\searxng:/etc/searxng" searxng/searxng
+python main.py cli
 ```
 
-Set `SEARXNG_URL` if it runs somewhere other than `http://localhost:8080`.
+### Ken t7eb tbaddel fil page React
 
-Conversations and preferences are saved in Supabase. Run `setup/database/create_tables.sql` once in the Supabase SQL Editor, then set `SUPABASE_PROJECT_URL` and `SUPABASE_SECRET_KEY` in `.env`. If Supabase cannot be reached, Car Scout still answers and prints a `[Not saved]` warning.
+7ell zouz terminals:
+- Terminal 1: `python main.py`
+- Terminal 2: `cd frontend` ba3d `npm run dev`, w 7ell `http://localhost:5173`
 
-## Notes
+Kol ma tsajjel fichier, el page titbaddel wa7adha, mouch lazem ta3mel build.
 
-This seed project is intentionally structured to match the project guide and is ready for deeper implementation of the search, comparison, and pricing flow.
+## Ken famma mochkla
+
+- **"Not saved"**: Supabase ma jewbetch. Car Scout yjaweb 3adi, ama ma ykhabich el conversation. Thabbet les clés mta3 Supabase fi `.env`.
+- **Ma yal9a 7atta annonce, walla y9oul el recherche ma khdmetch**: SearXNG mahouch khaddem. 7ell Docker Desktop w demarri `searxng`.
+- **"The Anthropic API key was rejected"**: el clé mta3 Claude ghalta. Thabbetha fi `.env`.
+- **"The chat page is not built yet"**: a3mel l'étape 5.
+- **SearXNG mouch 3al port 8080?** 7ott `SEARXNG_URL=...` fi `.env`.
