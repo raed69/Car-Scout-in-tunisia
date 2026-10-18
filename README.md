@@ -13,11 +13,12 @@ Exemple:
 - **Yefhem chnowa t7eb**: el marque, el modèle, el ville, el budget, el carburant, boîte auto walla manuelle.
 - **Ylawej 3al annonces** fil internet, w y3tik les liens.
 - **Yetfakker chnowa t7eb**: ken 9otlou marra "diesel fi Tunis", el marra el jeya ya3ref.
+- **Yetfakker el 7diith**: fi nafs el chat, tnajjem t9oullou "w wa7da arkhes?" walla "w fi Sousse?" w yefhem 3la chnowa tahki. "New chat" yebda men jdid.
 
 ## Chnowa mazel mouch mawjoud
 
 - Mazel ma y9arach el prix, el 3am wel kilométrage mta3 kol annonce.
-- Mazel ma yetfakkarch el messages elli 9bal: ken tes2lou "w wa7da arkhes?", ma yefhemch.
+- Ken t3awed t7ell el page, el chat elli kont fih ma yarja3ch (ama mazel mkhabbi fi Supabase).
 
 Les détails lkol mawjoudin fi [TODO.md](TODO.md).
 

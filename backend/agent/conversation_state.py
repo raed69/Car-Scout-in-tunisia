@@ -13,6 +13,8 @@ class ConversationState:
     """The working state shared by all agent steps."""
 
     messages: list[dict] = field(default_factory=list)
+    # Questions and answers from earlier in the same chat, oldest first.
+    earlier_messages: list[dict] = field(default_factory=list)
     user_goal: str | None = None
     car_search: CarSearch | None = None
     user_preferences: UserPreferences | None = None

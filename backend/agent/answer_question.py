@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from backend.agent.conversation_state import ConversationState
+from backend.agent.steps.load_conversation import load_conversation
 from backend.agent.steps.load_preferences import load_preferences
 from backend.agent.steps.remember_preferences import remember_preferences
 from backend.agent.steps.run_tools import run_tools
@@ -17,6 +18,8 @@ def answer_question(question: str, conversation_id: str | None = None) -> Conver
         state.conversation_id = conversation_id
     state.messages.append({"role": "user", "content": question})
     load_preferences(state)
+    if conversation_id:
+        load_conversation(state)
     understand_message(state, question)
     remember_preferences(state)
     run_tools(state)

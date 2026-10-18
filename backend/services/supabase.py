@@ -36,10 +36,23 @@ class SupabaseClient:
             raise requests.HTTPError(f"Supabase returned {response.status_code}: {response.text}", response=response)
         return response
 
-    def select(self, table: str, filters: dict[str, str] | None = None) -> list[dict]:
-        """Return the rows where every column in filters equals the given value."""
+    def select(
+        self,
+        table: str,
+        filters: dict[str, str] | None = None,
+        order: str | None = None,
+        limit: int | None = None,
+    ) -> list[dict]:
+        """Return the rows where every column in filters equals the given value.
+
+        order is a column name, with ".desc" for the newest or largest first, such as "id.desc".
+        """
 
         params = {column: f"eq.{value}" for column, value in (filters or {}).items()}
+        if order:
+            params["order"] = order
+        if limit:
+            params["limit"] = limit
         return self._request("GET", table, params=params).json()
 
     def insert(self, table: str, rows: list[dict]) -> None:

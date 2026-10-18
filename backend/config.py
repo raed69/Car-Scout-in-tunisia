@@ -16,4 +16,8 @@ DEFAULT_USER_ID = "local_user"
 
 # Guardrail values to keep the agent predictable and bounded.
 MAX_SEARCH_RESULTS = 10
+# How much of the chat is sent back to Claude with each new question. More means better
+# follow-ups but a slightly higher price per question.
+MAX_EARLIER_MESSAGES = 10
+MAX_EARLIER_MESSAGE_LENGTH = 1500
 MAX_EXPLANATION_LENGTH = 600

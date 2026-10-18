@@ -4,6 +4,7 @@ import json
 
 from backend.agent.conversation_state import ConversationState
 from backend.agent.load_prompt import load_prompt
+from backend.agent.steps.load_conversation import format_earlier_messages
 from backend.services.claude import ClaudeClient
 from backend.models.car_search import CarSearch
 
@@ -18,7 +19,7 @@ DEFAULT_FIELDS = {
 
 
 def build_request(state: ConversationState, message: str) -> str:
-    """Put the saved preferences, if any, in front of the user's message."""
+    """Put the saved preferences and the earlier messages, if any, in front of the user's message."""
 
     preferences = state.user_preferences
     saved = {
@@ -26,12 +27,17 @@ def build_request(state: ConversationState, message: str) -> str:
         for search_field, preference_field in DEFAULT_FIELDS.items()
         if preferences is not None and getattr(preferences, preference_field) is not None
     }
-    if not saved:
+    earlier = format_earlier_messages(state)
+    if not saved and not earlier:
         return message
-    return (
-        f"Saved preferences:\n{json.dumps(saved, ensure_ascii=False)}\n\n"
-        f"User message:\n{message}"
-    )
+
+    sections = []
+    if saved:
+        sections.append(f"Saved preferences:\n{json.dumps(saved, ensure_ascii=False)}")
+    if earlier:
+        sections.append(f"Earlier in this conversation:\n{earlier}")
+    sections.append(f"User message:\n{message}")
+    return "\n\n".join(sections)
 
 
 def understand_message(state: ConversationState, user_message: str | None = None) -> ConversationState:

@@ -36,7 +36,7 @@ Done and tested with a real question on 10 October 2026. The sentences below des
 - [x] Removed the old placeholder `actions/search_ads.py` (18 October 2026).
 - [ ] `backend/rules/compare_cars.py` has the year 2026 written in the code. Use the current year instead.
 - [x] Web page and web API. `python main.py` opens the chat page (React, in `frontend/`, served by `backend/app/api.py`). `python main.py cli` keeps the terminal chat. Tested on 11 October 2026 with a fake answer, so no Claude credit was spent. Not yet tested with a real question.
-- [ ] The chat forgets earlier messages. Each question is answered alone, so "and a cheaper one?" is not understood. Same in the terminal.
+- [ ] **Remember earlier messages.** The code is written (18 October 2026): `backend/agent/steps/load_conversation.py` loads the last 10 messages of the chat from Supabase and gives them to Claude, so "and a cheaper one?" can be understood. Tested without Claude: the messages load in the right order. Not yet tested with a real question.
 - [ ] Tests.
 - [x] Git and GitHub: pushed to https://github.com/raed69/Car-Scout-in-tunisia on 18 October 2026. `.env` and `setup/searxng/settings.yml` (it has a secret key) stay on this computer only.
 
