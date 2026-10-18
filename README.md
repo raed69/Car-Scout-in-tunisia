@@ -63,7 +63,7 @@ CarScout/
 
 Set any API keys in `.env` before using real integrations.
 
-Web search uses a local SearXNG container (no API key). It reads its settings from `setup/searxng/`, which must keep `json` in `search.formats`:
+Web search uses a local SearXNG container (no API key). It reads its settings from `setup/searxng/settings.yml`, which must keep `json` in `search.formats`. That file is not on GitHub because it holds a secret key: copy `settings.example.yml` to `settings.yml` and put a random string in `secret_key`. Then start the container:
 
 ```bash
 docker run -d --name searxng -p 8080:8080 -v "%cd%\setup\searxng:/etc/searxng" searxng/searxng

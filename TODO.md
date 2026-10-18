@@ -38,7 +38,7 @@ Done and tested with a real question on 10 October 2026. The sentences below des
 - [x] Web page and web API. `python main.py` opens the chat page (React, in `frontend/`, served by `backend/app/api.py`). `python main.py cli` keeps the terminal chat. Tested on 11 October 2026 with a fake answer, so no Claude credit was spent. Not yet tested with a real question.
 - [ ] The chat forgets earlier messages. Each question is answered alone, so "and a cheaper one?" is not understood. Same in the terminal.
 - [ ] Tests.
-- [ ] Git: run `git init` and make a first commit. Check that `.env` is not included.
+- [x] Git and GitHub: pushed to https://github.com/raed69/Car-Scout-in-tunisia on 18 October 2026. `.env` and `setup/searxng/settings.yml` (it has a secret key) stay on this computer only.
 
 ## How to start SearXNG
 
