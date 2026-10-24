@@ -12,6 +12,12 @@
   --warn-ink: #6b4e00;
   --error-bg: #fbe4e4;
   --error-ink: #8a1c22;
+  --cheap-bg: #dff3e4;
+  --cheap-ink: #1d6b35;
+  --fair-bg: #ece9e1;
+  --fair-ink: #4d4a43;
+  --expensive-bg: #fbe4e4;
+  --expensive-ink: #8a1c22;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -28,6 +34,12 @@
     --warn-ink: #f1d98a;
     --error-bg: #3d1a1c;
     --error-ink: #f5b5b8;
+    --cheap-bg: #173a22;
+    --cheap-ink: #9fdcb0;
+    --fair-bg: #2c2a26;
+    --fair-ink: #c9c5bb;
+    --expensive-bg: #3d1a1c;
+    --expensive-ink: #f5b5b8;
   }
 }
 
@@ -141,6 +153,56 @@ main { flex: 1; overflow-y: auto; }
 }
 .message a { color: var(--accent); text-underline-offset: 2px; }
 .message.error { background: var(--error-bg); color: var(--error-ink); border-color: transparent; }
+.answer { display: flex; flex-direction: column; gap: 10px; }
+.answer .message { align-self: flex-start; }
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+.car-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.car-photo {
+  aspect-ratio: 4 / 3;
+  background: var(--page);
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  text-decoration: none;
+}
+.car-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.car-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; }
+.car-link {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+.car-card h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.car-price { font-weight: 700; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 999px; }
+.badge.cheap { background: var(--cheap-bg); color: var(--cheap-ink); }
+.badge.fair { background: var(--fair-bg); color: var(--fair-ink); }
+.badge.expensive { background: var(--expensive-bg); color: var(--expensive-ink); }
+.car-facts { font-size: 13px; color: var(--muted); }
+.car-note { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+
 .note {
   align-self: flex-start;
   max-width: 92%;

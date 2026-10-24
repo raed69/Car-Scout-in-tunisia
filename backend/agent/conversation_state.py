@@ -22,6 +22,9 @@ class ConversationState:
     tool_calls_so_far: int = 0
     last_tool_results: list[dict] = field(default_factory=list)
     final_answer: str | None = None
+    # For the chat page: the short text above the cards, and one card per chosen ad.
+    answer_text: str | None = None
+    car_cards: list[dict] = field(default_factory=list)
     user_id: str = DEFAULT_USER_ID
     conversation_id: str = field(default_factory=lambda: str(uuid4()))
     storage_warnings: list[str] = field(default_factory=list)

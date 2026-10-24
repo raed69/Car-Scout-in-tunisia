@@ -83,7 +83,11 @@ export default function App() {
     try {
       const data = await askQuestion(question, conversationId);
       addMessages(
-        { kind: "assistant", text: data.answer || "No answer came back. Try again." },
+        {
+          kind: "assistant",
+          text: data.text || data.answer || "No answer came back. Try again.",
+          cards: data.cards,
+        },
         ...(data.warnings || []).map((warning) => ({ kind: "note", text: warning }))
       );
       setPreferences(data.preferences);
@@ -119,7 +123,7 @@ export default function App() {
           {restoring && messages.length === 0 && <Message kind="waiting" text="Loading your last chat" />}
           {!restoring && messages.length === 0 && <Welcome onPick={pickExample} />}
           {messages.map((message) => (
-            <Message key={message.id} kind={message.kind} text={message.text} />
+            <Message key={message.id} kind={message.kind} text={message.text} cards={message.cards} />
           ))}
           {busy && <Message kind="waiting" text="Searching" />}
         </div>

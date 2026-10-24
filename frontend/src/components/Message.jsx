@@ -1,3 +1,5 @@
+import CarCard from "./CarCard.jsx";
+
 // Shows "site.tn/short/path…" instead of a very long address; the link itself stays complete.
 function shortLabel(url) {
   try {
@@ -50,7 +52,23 @@ const CLASS_NAMES = {
   note: "note",
 };
 
-export default function Message({ kind, text }) {
+export default function Message({ kind, text, cards }) {
+  if (kind === "assistant" && cards?.length) {
+    return (
+      <div className="answer">
+        {text && (
+          <div className={CLASS_NAMES[kind]} dir="auto">
+            {withLinks(text)}
+          </div>
+        )}
+        <div className="car-grid">
+          {cards.map((card) => (
+            <CarCard key={card.url} card={card} />
+          ))}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={CLASS_NAMES[kind]} dir="auto">
       {kind === "assistant" ? withLinks(text) : text}

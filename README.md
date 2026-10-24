@@ -16,6 +16,7 @@ Exemple:
 - **Yetfakker el 7diith**: fi nafs el chat, tnajjem t9oullou "w wa7da arkhes?" walla "w fi Sousse?" w yefhem 3la chnowa tahki. "New chat" yebda men jdid.
 - **Ma ynsach el chat**: ken t3awed t7ell el page, el chat elli kont fih yarja3.
 - **Y9ra el prix, el 3am wel kilométrage** mel annonces, w y9ollek ken el prix rkhis, normal walla ghali m9arna bel annonces lokhrin.
+- **Ywarrik les karhbet b taswira**: kol annonce fi carte fiha taswira, el lien ta7tha, el prix, el 3am wel km, w jweb 9sir (mouch texte twil).
 - **Ys2lek ken mafhemch**: ken t9oullou "nheb karhba" bark, ys2lek chnowa el modèle wel budget 9bal ma ylawej.
 
 ## Chnowa mazel mouch mawjoud

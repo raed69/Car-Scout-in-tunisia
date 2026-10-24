@@ -31,6 +31,8 @@ class SearxngClient:
                 "url": item.get("url", ""),
                 "content": item.get("content", ""),
                 "engine": item.get("engine"),
+                # A small picture of the page, when the search engine has one.
+                "thumbnail": item.get("thumbnail") or item.get("img_src") or None,
             }
             for item in response.json().get("results", [])[:max_results]
         ]

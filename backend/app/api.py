@@ -78,6 +78,8 @@ def create_app() -> FastAPI:
 
         return {
             "answer": state.final_answer or "",
+            "text": state.answer_text or state.final_answer or "",
+            "cards": state.car_cards,
             "conversation_id": state.conversation_id,
             "preferences": asdict(state.user_preferences),
             "warnings": state.storage_warnings,
